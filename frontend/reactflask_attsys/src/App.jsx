@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div className="App">
-      <p>hello world</p>
+      <p>hello world, moses</p>
       {(data.map((data, index) => (
           <p key={index}>{data.course}, {data.firstname}, {data.lastname}, {data.idno}, {data.level}</p>
         ))
