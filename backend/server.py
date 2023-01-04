@@ -16,14 +16,14 @@ db = connect(
 )
 
 #table: str = "student"
-
-
+'''
 def getallrecord(table: str) -> list: 
     sql: str = f"SELECT * FROM `{table}`"
     cursor: object = db.cursor(dictionary=True)
     cursor.execute(sql)
     rows: list = cursor.fetchall()
     return rows
+'''
 
 @app.route("/members")
 def members():
@@ -32,7 +32,7 @@ def members():
     cursor.execute(sql)
     rows: list = cursor.fetchall()
     return rows
-    #return {"members": ["Member1", "Member2", "Member3"]}
+    # return {"members": ["Member1", "Member2", "Member3"]} (for testing)
 
 
 
