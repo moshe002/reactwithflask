@@ -1,4 +1,4 @@
-from flask import Flask 
+from flask import Flask, request, flash, redirect
 from mysql.connector import connect
 from flask_cors import CORS # idk why i installed cors
 
@@ -34,6 +34,43 @@ def members():
     return rows
     # return {"members": ["Member1", "Member2", "Member3"]} (for testing)
 
+def addrecord(table: str, **kwargs) -> int: 
+    keys: list = list(kwargs.keys())
+    values: list = list(kwargs.values())
+
+    flds: str = "`,`".join(keys)
+    data: str = "','".join(values)
+
+    sql: str = f"INSERT INTO `{table}` (`{flds}`) VALUES('{data}')"
+    cursor: object = db.cursor()
+    cursor.execute(sql)
+    db.commit()
+    rows_affected: int = cursor.rowcount
+    cursor.close()
+    return rows_affected
+
+@app.route("/savestudent", methods=["POST"])
+def savestudent():
+    idno: str = request.form["idno"]
+    lastname: str = request.form["lastname"]
+    firstname: str = request.form["firstname"]
+    course: str = request.form["course"]
+    level: str = request.form["level"]
+    
+    addrecord('student_image',idno=idno,lastname=lastname,firstname=firstname,course=course,level=level)
+    return "Success"
+
+
+'''
+CODE FOR ADD STUDENT
+sql: str = f"INSERT INTO `{table}` (`{flds}`) VALUES('{data}')"
+    cursor: object = db.cursor()
+    cursor.execute(sql)
+    db.commit()
+    rows_affected: int = cursor.rowcount
+    cursor.close()
+    return rows_affected
+'''
 
 
 if __name__=="__main__":

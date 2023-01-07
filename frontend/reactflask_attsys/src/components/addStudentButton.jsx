@@ -1,9 +1,10 @@
 import React from 'react'
 
-function AddStudentButton() {
+function AddStudentButton({ setIsModal }) {
   
     const handleClick = () => {
-        console.log('add student')
+        console.log("add student button")
+        setIsModal(true)
     }
   
     return (
