@@ -11,7 +11,7 @@ function App() {
 
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [isPresent, setIsPresent] = useState("")
+  const [isPresent, setIsPresent] = useState()
   const [isModal, setIsModal] = useState(false)
 
   useEffect(() => {

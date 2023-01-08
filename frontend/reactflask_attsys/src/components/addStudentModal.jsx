@@ -2,27 +2,16 @@ import React, { useState } from 'react'
 
 function AddStudentModal({ setIsModal }) {
 
-    const [data, setData] = useState({})
-
-    const handleChange = (event) => {
-        setData({...data, 
-            [event.target.idno]: event.target.value,
-            [event.target.firstname]: event.target.value,
-            [event.target.lastname]: event.target.value,
-            [event.target.level]: event.target.value,
-            [event.target.course]: event.target.value,
-        });
-      }
-
     const handleSubmit = (event) => {
         event.preventDefault()
-        fetch('/savestudent', {
+        const formData = new FormData(event.target)
+        fetch("http://localhost:5000/savestudent", {
             method: 'POST',
-            body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' }
+            body: formData,
           }).then(res => res.json())
           .then(response => console.log('Success:', JSON.stringify(response)))
           .catch(error => console.error('Error:', error))
+          alert("Student Added!")
     }
 
   return (    
@@ -37,22 +26,22 @@ function AddStudentModal({ setIsModal }) {
             <form onSubmit={handleSubmit} method='POST' action='/savestudent'>
                 <div>
                     <label htmlFor="idno">ID Number: </label>
-                    <input onChange={handleChange} className='outline-none p-1' name='idno' id='idno' type="number" required />
+                    <input className='outline-none p-1' name='idno' id='idno' type="number" required />
                 </div>
                 <br />
                 <div>
                     <label htmlFor="firstname">Firstname: </label>
-                    <input onChange={handleChange} className='outline-none p-1' name='firstname' id='firstname' type="text" required />
+                    <input className='outline-none p-1' name='firstname' id='firstname' type="text" required />
                 </div>
                 <br />
                 <div>
                     <label htmlFor="lastname">Lastname: </label>
-                    <input onChange={handleChange} className='outline-none p-1' name='lastname' id='lastname' type="text" required />
+                    <input className='outline-none p-1' name='lastname' id='lastname' type="text" required />
                 </div>
                 <br />
                 <div>
                     <label htmlFor="level">Level: </label>
-                        <select onChange={handleChange} className='outline-none p-1' name="level" id="level" required >
+                        <select className='outline-none p-1' name="level" id="level" required >
                             <option value="1">1st Year</option>
                             <option value="2">2nd Year</option>
                             <option value="3">3rd Year</option>
@@ -62,7 +51,7 @@ function AddStudentModal({ setIsModal }) {
                 <br />
                 <div>
                     <label htmlFor="course">Course: </label>
-                        <select onChange={handleChange} className='outline-none p-1' name="course" id="course" required >
+                        <select className='outline-none p-1' name="course" id="course" required >
                             <option value="bsit">BSIT</option>
                             <option value="bscs">BSCS</option>
                             <option value="bsis">BSIS</option>

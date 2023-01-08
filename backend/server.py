@@ -16,14 +16,6 @@ db = connect(
 )
 
 #table: str = "student"
-'''
-def getallrecord(table: str) -> list: 
-    sql: str = f"SELECT * FROM `{table}`"
-    cursor: object = db.cursor(dictionary=True)
-    cursor.execute(sql)
-    rows: list = cursor.fetchall()
-    return rows
-'''
 
 @app.route("/members")
 def members():
@@ -34,43 +26,29 @@ def members():
     return rows
     # return {"members": ["Member1", "Member2", "Member3"]} (for testing)
 
-def addrecord(table: str, **kwargs) -> int: 
-    keys: list = list(kwargs.keys())
-    values: list = list(kwargs.values())
-
-    flds: str = "`,`".join(keys)
-    data: str = "','".join(values)
-
-    sql: str = f"INSERT INTO `{table}` (`{flds}`) VALUES('{data}')"
-    cursor: object = db.cursor()
-    cursor.execute(sql)
-    db.commit()
-    rows_affected: int = cursor.rowcount
-    cursor.close()
-    return rows_affected
-
 @app.route("/savestudent", methods=["POST"])
 def savestudent():
-    idno: str = request.form["idno"]
-    lastname: str = request.form["lastname"]
-    firstname: str = request.form["firstname"]
-    course: str = request.form["course"]
-    level: str = request.form["level"]
+    form_data = request.form
+    idno = form_data["idno"]
+    lastname = form_data["lastname"]
+    firstname = form_data["firstname"]
+    course = form_data["course"]
+    level = form_data["level"]
+
+    # connect to the database and insert the data
+    cursor = db.cursor(dictionary=True)
+    cursor.execute(
+        'INSERT INTO student (idno, lastname, firstname, course, level) VALUES (%s, %s, %s, %s, %s)',
+        (idno, lastname, firstname, course, level),
+    )
+    rows: list = cursor.fetchall()
     
-    addrecord('student_image',idno=idno,lastname=lastname,firstname=firstname,course=course,level=level)
-    return "Success"
-
-
-'''
-CODE FOR ADD STUDENT
-sql: str = f"INSERT INTO `{table}` (`{flds}`) VALUES('{data}')"
-    cursor: object = db.cursor()
-    cursor.execute(sql)
     db.commit()
-    rows_affected: int = cursor.rowcount
-    cursor.close()
-    return rows_affected
-'''
+    db.close()    
+
+    return rows
+
+
 
 
 if __name__=="__main__":
@@ -87,3 +65,5 @@ if __name__=="__main__":
 
 # to run server: py -3 server.py
 # ctrl + c to quit server
+
+# flask --app app --debug run (save lng ari)
