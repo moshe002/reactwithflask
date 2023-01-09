@@ -11,7 +11,7 @@ function App() {
 
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [isPresent, setIsPresent] = useState()
+  const [color, setColor] = useState(['black'])
   const [isModal, setIsModal] = useState(false)
 
   useEffect(() => {
@@ -47,13 +47,13 @@ function App() {
               {(data.map((data, index) => (
                   <tr key={index}>
                     <td>{data.course}</td>
-                    <td className={`text-${isPresent}-500`}>{data.firstname}</td>
-                    <td>{data.lastname}</td>
+                    <td className={`text-${color[index]}-500`}>{data.firstname}</td>
+                    <td className={`text-${color[index]}-500`}>{data.lastname}</td>
                     <td>{data.idno}</td>
                     <td>{data.level}</td>
                     <td className='flex justify-center items-center gap-3'>
-                      <CheckButton symbol="&#10003;" index={index} title="Present" setIsPresent={setIsPresent} />
-                      <WrongButton symbol="&#65794;" index={index} title="Absent" setIsPresent={setIsPresent} />
+                      <CheckButton symbol="&#10003;" index={index} title="Present" setColor={setColor} />
+                      <WrongButton symbol="&#65794;" index={index} title="Absent" setColor={setColor} />
                     </td>
                   </tr>
                 ))
@@ -61,16 +61,13 @@ function App() {
             </tbody>
           </table>
           }
-          <ExportAttendanceButton />
+          <ExportAttendanceButton data={data} setColor={setColor} />
       </div>
     </div>
   )
 }
 
 export default App
-
-// <button className='border-2 border-gray-400 w-20 rounded-sm hover:bg-blue-300' onClick={handleCheckButtonClick}>&#10003;</button>
-// <button className='border-2 border-gray-400 w-20 rounded-sm hover:bg-blue-300' onClick={handleWrongButtonClick}>&#65794;</button>
 
 // cd reactflask_attsys
 // npm run dev 

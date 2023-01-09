@@ -1,10 +1,15 @@
 import React from 'react'
 
-function CheckButton({ index, symbol, title, setIsPresent  }) { 
+function CheckButton({ index, symbol, title, setColor }) { 
 
     const handleClick = () => {
+        setColor((prev) => {
+            const newColor = [...prev]
+            newColor[index] === 'black' ?
+            newColor[index] = 'green' : newColor[index] = 'black'
+            return newColor
+        })
         console.log('check button, index is: ' + index)
-        setIsPresent("green")
     }
 
     return (

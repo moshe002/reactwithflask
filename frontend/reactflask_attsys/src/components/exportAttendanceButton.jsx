@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-function ExportAttendanceButton() {
+/* 
+    how to get the attendance?
+    get data.firstname 
+    and if the color of the firstname is green then the student is present
+    else absent        
+*/
+
+function ExportAttendanceButton({ data, setColor }) {
+
+    const [attendance, setAttendance] = useState("")
 
     const handleClick = () => {
         console.log('export attendance')
+        for(let i = 0; i < data.length; i++){
+            console.log(data[i].firstname)     
+        }
     }
 
     return (
