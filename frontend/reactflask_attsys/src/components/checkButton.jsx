@@ -1,15 +1,14 @@
 import React from 'react'
 
-function CheckButton({ index, symbol, title, setColor }) { 
+function CheckButton({ index, symbol, title, setAttend, attendance, setAttendance }) { 
 
     const handleClick = () => {
-        setColor((prev) => {
-            const newColor = [...prev]
-            newColor[index] === 'black' ?
-            newColor[index] = 'green' : newColor[index] = 'black'
-            return newColor
-        })
-        console.log('check button, index is: ' + index)
+        if (index !== undefined) {
+            setAttend(index)
+        }
+        console.log('index is: ' + index)
+        attendance.push(index)
+        setAttendance(attendance)
     }
 
     return (

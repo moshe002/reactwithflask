@@ -1,21 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-/* 
-    how to get the attendance?
-    get data.firstname 
-    and if the color of the firstname is green then the student is present
-    else absent        
-*/
-
-function ExportAttendanceButton({ data, setColor }) {
-
-    const [attendance, setAttendance] = useState("")
+// data is an array of objects (the data in the backend (students))
+// attendance is an array 
+function ExportAttendanceButton({ data, attendance }) {
 
     const handleClick = () => {
-        console.log('export attendance')
         for(let i = 0; i < data.length; i++){
-            console.log(data[i].firstname)     
+            console.log(data[i].firstname, data[i].lastname) 
         }
+        console.log(attendance)
     }
 
     return (

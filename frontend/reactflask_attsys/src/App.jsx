@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import './App.css'
 
 import CheckButton from './components/checkButton'
-import WrongButton from './components/wrongButton'
 import AddStudentButton from './components/addStudentButton'
 import ExportAttendanceButton from './components/exportAttendanceButton'
 import AddStudentModal from './components/addStudentModal'
@@ -11,8 +10,9 @@ function App() {
 
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [color, setColor] = useState(['black'])
+  const [attend, setAttend] = useState(-1)
   const [isModal, setIsModal] = useState(false)
+  const [attendance, setAttendance] = useState([])
 
   useEffect(() => {
     fetch("http://localhost:5000/members").then(res => res.json()).then(data => {
@@ -47,13 +47,12 @@ function App() {
               {(data.map((data, index) => (
                   <tr key={index}>
                     <td>{data.course}</td>
-                    <td className={`text-${color[index]}-500`}>{data.firstname}</td>
-                    <td className={`text-${color[index]}-500`}>{data.lastname}</td>
+                    <td className={attend === index ? `text-green-500` : 'text-red-500'}>{data.firstname}</td>
+                    <td>{data.lastname}</td>
                     <td>{data.idno}</td>
                     <td>{data.level}</td>
                     <td className='flex justify-center items-center gap-3'>
-                      <CheckButton symbol="&#10003;" index={index} title="Present" setColor={setColor} />
-                      <WrongButton symbol="&#65794;" index={index} title="Absent" setColor={setColor} />
+                      <CheckButton symbol="&#10003;" index={index} title="Present" setAttend={setAttend} attendance={attendance} setAttendance={setAttendance} />
                     </td>
                   </tr>
                 ))
@@ -61,7 +60,7 @@ function App() {
             </tbody>
           </table>
           }
-          <ExportAttendanceButton data={data} setColor={setColor} />
+          <ExportAttendanceButton data={data} attendance={attendance} />
       </div>
     </div>
   )
