@@ -6,7 +6,7 @@ function CheckButton({ index, symbol, title, setAttend, attendance, setAttendanc
         if (index !== undefined) {
             setAttend(index)
         }
-        console.log('index is: ' + index)
+        console.log('student (row) index is: ' + index)
         attendance.push(index)
         setAttendance(attendance)
     }

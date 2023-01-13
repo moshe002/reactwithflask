@@ -1,4 +1,4 @@
-from flask import Flask, request, flash, redirect
+from flask import Flask, request, send_file
 from mysql.connector import connect
 from flask_cors import CORS # idk why i installed cors
 
@@ -16,6 +16,13 @@ db = connect(
 )
 
 #table: str = "student"
+
+@app.route("/export", methods=['POST'])
+def export():
+    text = request.json['text']
+    with open('attendance.txt', 'w') as f:
+        f.write(text)
+    return send_file('attendance.txt', as_attachment=True)
 
 @app.route("/members")
 def members():
